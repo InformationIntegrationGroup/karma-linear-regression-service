@@ -23,9 +23,9 @@ A RESTful service for Linear Regression implementation 'lm' in R.
         http://**host-name**:**port**/lm-service/api/lm/train
 
     + By default, the last column is assumed to contain the class labels
-    + To specify column-number of class labels, add *classColumnNumber* parameter:
+    + To specify column-number of the dependent variable, add *dependentColumnNumber* parameter:
 
-        http://**host-name**:**port**/lm-service/api/lm/train?classColumnNumber=**column-number**
+        http://**host-name**:**port**/lm-service/api/lm/train?dependentColumnNumber=**column-number**
 
     + The response will contain a summary of the training phase and the name of the created model at its bottom
     + Note down the model name (which starts with 'LM' and ends with 'model')
@@ -36,6 +36,6 @@ A RESTful service for Linear Regression implementation 'lm' in R.
 
         http://**host-name**:**port**/lm-service/api/lm/test?modelName=**model-name**
 
-    + To specify column-number of class labels, add *classColumnNumber* parameter:
+    + To specify column-number of the dependent variable, add *dependentColumnNumber* parameter:
 
-        http://**host-name**:**port**/lm-service/api/lm/test?modelName=**model-name**&classColumnNumber=**column-number**
+        http://**host-name**:**port**/lm-service/api/lm/test?modelName=**model-name**&dependentColumnNumber=**column-number**

@@ -30,29 +30,29 @@ public class LinearRegressionService {
      * @param classColNum Column number of class labels
      * 
      */
-    private void saveCSV(String data, String filePath, int classColNum) throws IOException {
+    private void saveCSV(String data, String filePath, int dependentColNum) throws IOException {
 
         FileWriter writer = new FileWriter(filePath);
         String[] rows = data.split(newline);
-        classColNum--;
-        boolean classColumnSpecified = (classColNum >= 0);
+        dependentColNum--;
+        boolean dependentColumnSpecified = (dependentColNum >= 0);
         for(String rowString : rows) {
 
                 String[] row = rowString.split(",");
                 for(int i = 0; i < row.length; i++) {
 
-                    if(i == classColNum)
+                    if(i == dependentColNum)
                         continue;
                     writer.append(row[i]);
                     if(i != row.length - 1)
                         writer.append(",");
                 
                 }
-                if(classColumnSpecified) {
+                if(dependentColumnSpecified) {
 
-                    if(classColNum != row.length - 1)
+                    if(dependentColNum != row.length - 1)
                         writer.append(",");
-                    writer.append(row[classColNum]);
+                    writer.append(row[dependentColNum]);
                     
                 }
                 writer.append(newline);
@@ -135,10 +135,10 @@ public class LinearRegressionService {
     @Path("/train")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
-    public Response train(String data, @DefaultValue("-1") @QueryParam("classColumnNumber") int classColNum) throws Exception {
+    public Response train(String data, @DefaultValue("-1") @QueryParam("dependentColumnNumber") int dependentColNum) throws Exception {
 
         String dataPath = resourcesPath + "/Train_" + sdf.format(Calendar.getInstance().getTime()) + ".csv";
-        saveCSV(data, dataPath, classColNum);
+        saveCSV(data, dataPath, dependentColNum);
 
 
         String modelName = "LM-" + sdf.format(Calendar.getInstance().getTime()) + "-model";
@@ -167,10 +167,10 @@ public class LinearRegressionService {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
     public Response test(String data, @QueryParam("modelName") String modelName,
-                @DefaultValue("-1") @QueryParam("classColumnNumber") int classColNum) throws Exception {
+                @DefaultValue("-1") @QueryParam("dependentColumnNumber") int dependentColNum) throws Exception {
 
         String dataPath = resourcesPath + "/Test_" + sdf.format(Calendar.getInstance().getTime()) + ".csv";
-        saveCSV(data, dataPath, classColNum);
+        saveCSV(data, dataPath, dependentColNum);
 
         String modelPath = getModelPath(modelName);
         
